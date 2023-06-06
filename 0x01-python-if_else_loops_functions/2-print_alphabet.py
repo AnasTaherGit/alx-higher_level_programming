@@ -1,3 +1,3 @@
 #!/usr/bin/python3
-for l in range(97, 123):
-    print("{}".format(chr(l)), end="")
+for DIDI in range(97, 123):
+    print("{}".format(chr(DIDI)), end="")
