@@ -1,4 +1,4 @@
 #!/usr/bin/python3
-for l in range(97, 123):
-    if chr(l) != 'q' and chr(l) != 'e':
-        print("{}".format(chr(l)), end="")
+for TITI in range(97, 123):
+    if chr(TITI) != 'q' and chr(TITI) != 'e':
+        print("{}".format(chr(TITI)), end="")
