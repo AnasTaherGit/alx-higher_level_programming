@@ -5,7 +5,7 @@ from add_0 import add
 def main():
     a = 1
     b = 2
-    print("{} + {} = {}\n".format(a, b, add(a, b)))
+    print(f"{a} + {b} = {add(a,b)}\n")
 
 
 if __name__ == "__main__":
