@@ -3,3 +3,5 @@ __pycache__/
 !/[0-9]*-*
 0x02-python-import_modules/add_0.py
 0x02-python-import_modules/calculator_1.py
+0x02-python-import_modules/variable_load_5.py
+0x02-python-import_modules/magic_calculation_102.py
