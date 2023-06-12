@@ -1,93 +1,68 @@
-#include <stdio.h>
 #include "lists.h"
-#include <stdlib.h>
 
 /**
- * reverse - reverses a linked list
- * @head: pointer to the head of the list
- * Return: pointer to the head of the reversed list
- */
-listint_t *reverse(listint_t *head)
-{
-	listint_t *prev = NULL;
-	listint_t *current = head;
-	listint_t *next;
-
-	while (current != NULL)
-	{
-		next = current->next;
-		current->next = prev;
-		prev = current;
-		current = next;
-	}
-	return (prev);
-}
-
-/**
- * is_palindrome - checks if a singly linked list is a palindrome
- * @head: double pointer to the head of the singly linked list
- * Return: 1 if palindrome, otherwise 0
+ * is_palindrome - Validates if a linked list is a palindrome
+ * @head: Double pointer to the head of the linked list
+ *
+ * Return: 1 if it is a palindrome, otherwise 0
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *slow = *head;
-	listint_t *fast = *head;
-	listint_t *second_half, *prev_slow = *head;
-	listint_t *midnode = NULL;
-	int res = 1;
+	listint_t *slowPtr = *head, *fastPtr = *head, *tempPtr = *head;
+	listint_t *duplicatedList = NULL;
 
-	if (*head != NULL && (*head)->next != NULL)
+	if (*head == NULL || (*head)->next == NULL)
+		return (1);
+	while (1)
 	{
-		while (fast != NULL && fast->next != NULL)
+		fastPtr = fastPtr->next->next;
+		if (!fastPtr)
 		{
-			fast = fast->next->next;
-			prev_slow = slow;
-			slow = slow->next;
+			duplicatedList = slowPtr->next;
+			break;
 		}
-		if (fast != NULL)
+		if (!fastPtr->next)
 		{
-			midnode = slow;
-			slow = slow->next;
+			duplicatedList = slowPtr->next->next;
+			break;
 		}
-		second_half = slow;
-		prev_slow->next = NULL;
-		reverse(second_half);
-		res = compareLists(*head, second_half);
-
-		reverse(second_half);
-		if (midnode != NULL)
-		{
-			prev_slow->next = midnode;
-			midnode->next = second_half;
-		}
-		else
-			prev_slow->next = second_half;
+		slowPtr = slowPtr->next;
 	}
-	return (res);
-}
-
-/**
- * compareLists - compares two linked lists
- * @head1: double pointer to the head of the singly linked list
- * @head2: double pointer to the head of the singly linked list
- * Return: 1 if palindrome, otherwise 0
- */
-int compareLists(listint_t *head1, listint_t *head2)
-{
-	listint_t *temp1 = head1;
-	listint_t *temp2 = head2;
-
-	while (temp1 && temp2)
+	flipLinkedList(&duplicatedList);
+	while (duplicatedList && tempPtr)
 	{
-		if (temp1->n == temp2->n)
+		if (tempPtr->n == duplicatedList->n)
 		{
-			temp1 = temp1->next;
-			temp2 = temp2->next;
+			duplicatedList = duplicatedList->next;
+			tempPtr = tempPtr->next;
 		}
 		else
 			return (0);
 	}
-	if (temp1 == NULL && temp2 == NULL)
+	if (!duplicatedList)
 		return (1);
 	return (0);
+}
+
+/**
+ * flipLinkedList - Flips the linked list
+ * @head: pointer to the head node of the list
+ *
+ * Return: pointer to the head node of the flipped list
+ */
+void flipLinkedList(listint_t **head)
+{
+	listint_t *previousNode = NULL;
+	listint_t *currentNode = *head;
+	listint_t *nextNode = NULL;
+
+	while (currentNode)
+	{
+		nextNode = currentNode->next;
+		currentNode->next = previousNode;
+		previousNode = currentNode;
+		currentNode = nextNode;
+	}
+
+	*head = previousNode;
 }
